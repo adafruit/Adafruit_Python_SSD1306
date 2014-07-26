@@ -70,7 +70,7 @@ class SSD1306Base(object):
 	"""
 
 	def __init__(self, width, height, rst, dc=None, sclk=None, din=None, cs=None, 
-				 gpio=None, spi=None, i2c_bus=I2C.get_default_bus()):
+				 gpio=None, spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
 		self._log = logging.getLogger('Adafruit_SSD1306.SSD1306Base')
 		self._spi = None
 		self._i2c = None
@@ -94,7 +94,7 @@ class SSD1306Base(object):
 		# Handle hardware I2C
 		elif i2c_bus is not None:
 			self._log.debug('Using hardware I2C')
-			self._i2c = I2C.Device(SSD1306_I2C_ADDRESS, i2c_bus)
+			self._i2c = I2C.Device(i2c_address, i2c_bus)
 		else:
 			raise ValueError('Unable to determine if using SPI or I2C.')
 		# Initialize DC pin if using SPI.
