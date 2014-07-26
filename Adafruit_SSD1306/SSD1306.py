@@ -224,10 +224,10 @@ class SSD1306Base(object):
 
 class SSD1306_128_64(SSD1306Base):
 	def __init__(self, rst, dc=None, sclk=None, din=None, cs=None, gpio=None,
-				 spi=None, i2c_bus=I2C.get_default_bus()):
+				 spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
 		# Call base class constructor.
 		super(SSD1306_128_64, self).__init__(128, 64, rst, dc, sclk, din, cs,
-											 gpio, spi, i2c_bus)
+											 gpio, spi, i2c_bus, i2c_address)
 
 	def _initialize(self):
 		# 128x64 pixel specific initialization.
@@ -268,10 +268,10 @@ class SSD1306_128_64(SSD1306Base):
 
 class SSD1306_128_32(SSD1306Base):
 	def __init__(self, rst, dc=None, sclk=None, din=None, cs=None, gpio=None,
-				 spi=None, i2c_bus=I2C.get_default_bus()):
+				 spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
 		# Call base class constructor.
 		super(SSD1306_128_32, self).__init__(128, 32, rst, dc, sclk, din, cs,
-											 gpio, spi, i2c_bus)
+											 gpio, spi, i2c_bus, i2c_address)
 
 	def _initialize(self):
 		# 128x32 pixel specific initialization.
