@@ -23,7 +23,6 @@ import time
 
 import Adafruit_GPIO as GPIO
 import Adafruit_GPIO.SPI as SPI
-import Adafruit_GPIO.I2C as I2C
 
 
 # Constants
@@ -70,7 +69,8 @@ class SSD1306Base(object):
 	"""
 
 	def __init__(self, width, height, rst, dc=None, sclk=None, din=None, cs=None, 
-				 gpio=None, spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
+				 gpio=None, spi=None, i2c_bus=None, i2c_address=SSD1306_I2C_ADDRESS,
+				 i2c=None):
 		self._log = logging.getLogger('Adafruit_SSD1306.SSD1306Base')
 		self._spi = None
 		self._i2c = None
@@ -79,7 +79,9 @@ class SSD1306Base(object):
 		self._pages = height/8
 		self._buffer = [0]*(width*self._pages)
 		# Default to platform GPIO if not provided.
-		self._gpio = gpio if gpio is not None else GPIO.get_platform_gpio()
+		self._gpio = gpio
+		if self._gpio is None:
+			self._gpio = GPIO.get_platform_gpio()
 		# Setup reset pin.
 		self._rst = rst
 		self._gpio.setup(self._rst, GPIO.OUT)
@@ -87,16 +89,22 @@ class SSD1306Base(object):
 		if spi is not None:
 			self._log.debug('Using hardware SPI')
 			self._spi = spi
+			self._spi.set_clock_hz(8000000)
 		# Handle software SPI
 		elif sclk is not None and din is not None and cs is not None:
 			self._log.debug('Using software SPI')
 			self._spi = SPI.BitBang(self._gpio, sclk, din, None, cs)
 		# Handle hardware I2C
-		elif i2c_bus is not None:
-			self._log.debug('Using hardware I2C')
-			self._i2c = I2C.Device(i2c_address, i2c_bus)
+		elif i2c is not None:
+			self._log.debug('Using hardware I2C with custom I2C provider.')
+			self._i2c = i2c.get_i2c_device(i2c_address)
 		else:
-			raise ValueError('Unable to determine if using SPI or I2C.')
+			self._log.debug('Using hardware I2C with platform I2C provider.')
+			import Adafruit_GPIO.I2C as I2C
+			if i2c_bus is None:
+				self._i2c = I2C.get_i2c_device(i2c_address)
+			else:
+				self._i2c = I2C.get_i2c_device(i2c_address, busnum=i2c_bus)
 		# Initialize DC pin if using SPI.
 		if self._spi is not None:
 			if dc is None:
@@ -224,10 +232,11 @@ class SSD1306Base(object):
 
 class SSD1306_128_64(SSD1306Base):
 	def __init__(self, rst, dc=None, sclk=None, din=None, cs=None, gpio=None,
-				 spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
+				 spi=None, i2c_bus=None, i2c_address=SSD1306_I2C_ADDRESS,
+				 i2c=None):
 		# Call base class constructor.
 		super(SSD1306_128_64, self).__init__(128, 64, rst, dc, sclk, din, cs,
-											 gpio, spi, i2c_bus, i2c_address)
+											 gpio, spi, i2c_bus, i2c_address, i2c)
 
 	def _initialize(self):
 		# 128x64 pixel specific initialization.
@@ -268,10 +277,11 @@ class SSD1306_128_64(SSD1306Base):
 
 class SSD1306_128_32(SSD1306Base):
 	def __init__(self, rst, dc=None, sclk=None, din=None, cs=None, gpio=None,
-				 spi=None, i2c_bus=I2C.get_default_bus(), i2c_address=SSD1306_I2C_ADDRESS):
+				 spi=None, i2c_bus=None, i2c_address=SSD1306_I2C_ADDRESS,
+				 i2c=None):
 		# Call base class constructor.
 		super(SSD1306_128_32, self).__init__(128, 32, rst, dc, sclk, din, cs,
-											 gpio, spi, i2c_bus, i2c_address)
+											 gpio, spi, i2c_bus, i2c_address, i2c)
 
 	def _initialize(self):
 		# 128x32 pixel specific initialization.
