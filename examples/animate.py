@@ -73,7 +73,7 @@ image = Image.new('1', (width, height))
 # Load default font.
 font = ImageFont.load_default()
 
-# Alternatively load a TTF font.
+# Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as this python script!
 # Some nice fonts to try: http://www.dafont.com/bitmap.php
 # font = ImageFont.truetype('Minecraftia.ttf', 8)
 
