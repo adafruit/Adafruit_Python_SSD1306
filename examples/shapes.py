@@ -110,7 +110,7 @@ x += shape_width+padding
 # Load default font.
 font = ImageFont.load_default()
 
-# Alternatively load a TTF font.
+# Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
 # Some other nice fonts to try: http://www.dafont.com/bitmap.php
 #font = ImageFont.truetype('Minecraftia.ttf', 8)
 
