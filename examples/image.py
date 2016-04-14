@@ -23,7 +23,7 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 
-import Image
+from PIL import Image
 
 
 # Raspberry Pi pin configuration:
@@ -61,9 +61,9 @@ disp.display()
 
 # Load image based on OLED display height.  Note that image is converted to 1 bit color.
 if disp.height == 64:
-	image = Image.open('happycat_oled_64.ppm').convert('1')
+    image = Image.open('happycat_oled_64.ppm').convert('1')
 else:
-	image = Image.open('happycat_oled_32.ppm').convert('1')
+    image = Image.open('happycat_oled_32.ppm').convert('1')
 
 # Alternatively load a different format image, resize it, and convert to 1 bit color.
 #image = Image.open('happycat.png').resize((disp.width, disp.height), Image.ANTIALIAS).convert('1')
