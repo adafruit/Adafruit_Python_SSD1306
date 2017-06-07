@@ -1,5 +1,5 @@
-# Copyright (c) 2014 Adafruit Industries
-# Author: Tony DiCola
+# Copyright (c) 2017 Adafruit Industries
+# Author: Tony DiCola & James DeVito
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ from PIL import ImageFont
 import subprocess
 
 # Raspberry Pi pin configuration:
-RST = 24
+RST = None     # on the PiOLED this pin isnt used
 # Note the following are only used with SPI:
 DC = 23
 SPI_PORT = 0
