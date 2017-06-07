@@ -150,9 +150,14 @@ try:
         else: # button is pressed:
             draw.ellipse((100,20,120,40), outline=255, fill=1) #B button filled
 
-        # Display image.
-        disp.image(image)
-        disp.display()
+        if not GPIO.input(A_pin) and not GPIO.input(B_pin) and not GPIO.input(C_pin):
+            catImage = Image.open('happycat_oled_64.ppm').convert('1')
+            disp.image(catImage)
+        else:
+            # Display image.
+            disp.image(image)
+            
+        disp.display()   
         time.sleep(.01) 
 
 
