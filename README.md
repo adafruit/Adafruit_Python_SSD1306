@@ -12,9 +12,15 @@ Installing
 
 ```
 sudo python -m pip install --upgrade pip setuptools wheel
+sudo pip install Adafruit-SSD1306
+```
+
+Or alternatively:
+
+```
+sudo python -m pip install --upgrade pip setuptools wheel
 git clone https://github.com/adafruit/Adafruit_Python_SSD1306.git
 cd Adafruit_Python_SSD1306
-git checkout update_ez_install
 sudo python setup.py install
 ```
 
