@@ -232,7 +232,7 @@ class SSD1306Base(object):
                 contrast = 0x9F
             else:
                 contrast = 0xCF
-
+            self.set_contrast(contrast)
 
 class SSD1306_128_64(SSD1306Base):
     def __init__(self, rst, dc=None, sclk=None, din=None, cs=None, gpio=None,
