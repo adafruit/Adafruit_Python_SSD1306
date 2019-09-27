@@ -1,5 +1,13 @@
-Adafruit Python SSD1306
+*DEPRECATED LIBRARY* Adafruit Python SSD1306
 =======================
+
+his library has been deprecated! We are leaving this up for historical and research purposes but archiving the repository.
+
+We are now only supporting the use of our CircuitPython libraries for use with Python.
+
+Check out this guide for info on using OLEDs with the CircuitPython library: https://learn.adafruit.com/monochrome-oled-breakouts/python-wiring
+
+---------------------------------------
 
 Python library to use SSD1306-based 128x64 or 128x32 pixel OLED displays with a Raspberry Pi or Beaglebone Black.
 
